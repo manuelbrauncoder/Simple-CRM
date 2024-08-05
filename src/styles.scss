@@ -1,1 +1,23 @@
 /* You can add global styles to this file, and also import other style files */
+
+@mixin dFlex($jc: center, $ai: center, $g: 0){
+    display: flex;
+    flex-direction: row;
+    justify-content: $jc;
+    align-items: $ai;
+    gap: $g;
+}
+
+*{
+    box-sizing: border-box;
+    margin: 0;
+}
+
+html, body { height: 100%; }
+body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
+
+a{
+    color: white;
+    text-decoration: none;
+    cursor: pointer;
+}

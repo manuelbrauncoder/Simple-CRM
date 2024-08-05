@@ -1,0 +1,21 @@
+@import '../../styles.scss';
+
+.name-input{
+    @include dFlex($g: 16px);
+}
+
+.street{
+    width: 100%;
+}
+
+.address-input{
+    >div{
+        @include dFlex($g: 16px);
+    }
+}
+
+.date-input{
+    mat-form-field{
+        width: 100%;
+    }
+}
