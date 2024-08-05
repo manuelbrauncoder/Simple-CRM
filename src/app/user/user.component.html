@@ -1,3 +1,36 @@
-<button (click)="openDialog()" matTooltip="Add User" class="addUserBtn" color="primary" mat-fab aria-label="button with plus icon">
-    <mat-icon>add</mat-icon>
-  </button>
+<button
+  (click)="openDialog()"
+  matTooltip="Add User"
+  class="addUserBtn"
+  color="primary"
+  mat-fab
+  aria-label="button with plus icon"
+>
+  <mat-icon>add</mat-icon>
+</button>
+
+<mat-card class="table-container" appearance="outlined">
+  <table class="user-table">
+    <tr>
+      <th>Name</th>
+      <th>E-Mail</th>
+      <th>City</th>
+    </tr>
+    <!-- <tr>
+        <td>Manuel Braun</td>
+        <td>contact&#64;manuel-braun.net</td>
+        <td>Partenstein</td>
+    </tr> -->
+    @for (user of fireService.users; track $index; let index = $index) {
+        <tr>
+            <td>{{ user.firstName}} {{ user.lastName }}</td>
+            <td>{{ user.email }}</td>
+            <td>{{ user.zipCode }} {{ user.city }}</td>
+        </tr>
+    } @empty {
+        <td>No User in List</td>
+    }
+
+   
+  </table>
+</mat-card>
