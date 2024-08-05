@@ -26,6 +26,7 @@ export class FirebaseService implements OnDestroy {
 
   users: User[] = [];
 
+
   constructor() {
     this.unsubUserList = this.getUserList();
   }
@@ -35,13 +36,32 @@ export class FirebaseService implements OnDestroy {
     return onSnapshot(q, (list) => {
       this.users = [];
       list.forEach(element => {
-        const user = new User(element.data())
-        this.users.push(user)        
+        //const user = new User(element.data());
+        //console.log(user);
+        const user = this.setUserObject(element.data(), element.id)
+        console.log(user);
+        
+        this.users.push(user);
+        
+                
       });
       list.docChanges().forEach((change)=>{
-        this.logChanges(change);
+        //this.logChanges(change);
       })
-    })
+    })    
+  }
+
+  setUserObject(obj: any, id: string): User {
+    return {
+      id: id || '',
+      firstName: obj.firstName || '',
+      lastName: obj.lastName || '',
+      birthDate: obj.birthDate || 0,
+      email: obj.email || '',
+      street: obj.street || '',
+      zipCode: obj.zipCode || 0,
+      city: obj.city || ''
+    }
   }
 
   logChanges(change: DocumentChange<DocumentData>) {
@@ -61,6 +81,8 @@ export class FirebaseService implements OnDestroy {
       console.log(err);
     });
   }
+
+  
 
   getUsersCollectionRef(){
     return collection(this.firestore, 'users');

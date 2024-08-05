@@ -33,7 +33,7 @@ import { FirebaseService } from '../services/firebase.service';
   templateUrl: './dialog-add-user.component.html',
   styleUrl: './dialog-add-user.component.scss',
 })
-export class DialogAddUserComponent implements OnInit {
+export class DialogAddUserComponent{
   public fireService = inject(FirebaseService);
   loading: boolean = false;
 
@@ -41,9 +41,7 @@ export class DialogAddUserComponent implements OnInit {
   user = new User();
   birthDate: Date | null = null;
 
-  ngOnInit(): void {
-    
-  }
+  
 
   closeDialog(): void {
     this.dialogRef.close();

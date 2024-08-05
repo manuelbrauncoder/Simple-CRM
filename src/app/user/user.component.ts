@@ -11,12 +11,13 @@ import {
 } from '@angular/material/dialog';
 import { User } from '../models/user.class';
 import { FirebaseService } from '../services/firebase.service';
+import { RouterLink } from '@angular/router';
 
 
 @Component({
   selector: 'app-user',
   standalone: true,
-  imports: [MatIconModule, MatButtonModule, MatTooltipModule, MatCardModule],
+  imports: [MatIconModule, MatButtonModule, MatTooltipModule, MatCardModule, RouterLink],
   templateUrl: './user.component.html',
   styleUrl: './user.component.scss'
 })
@@ -27,10 +28,11 @@ export class UserComponent implements OnInit {
   user = new User();
 
   openDialog(){
-    const dialogRef = this.dialog.open(DialogAddUserComponent);
+    this.dialog.open(DialogAddUserComponent);
   }
 
   ngOnInit(): void {
+    
     
   }
 }
