@@ -1,0 +1,55 @@
+<div class="dialog-container">
+    @if (loading) {
+        <mat-progress-bar class="progress-bar" mode="indeterminate"></mat-progress-bar>
+    }
+<h2 mat-dialog-title>Edit User</h2>
+<mat-dialog-content>
+  <div class="name-input">
+    <mat-form-field appearance="outline">
+      <mat-label>First Name</mat-label>
+      <input [disabled]="loading" [(ngModel)]="user.firstName" matInput placeholder="Placeholder" />
+      <!-- <mat-hint>Please enter your Name</mat-hint> -->
+    </mat-form-field>
+
+    <mat-form-field appearance="outline">
+      <mat-label>Last Name</mat-label>
+      <input [disabled]="loading" [(ngModel)]="user.lastName" matInput placeholder="Placeholder" />
+      <!-- <mat-hint>Please enter your Name</mat-hint> -->
+    </mat-form-field>
+  </div>
+
+  <div class="date-input">
+    <mat-form-field class="example-form-field" appearance="outline">
+      <mat-label>Birth Date</mat-label>
+      <input [disabled]="loading" [(ngModel)]="birthDate" matInput [matDatepicker]="datepicker" />
+      <!-- <mat-hint>MM/DD/YYYY</mat-hint> -->
+      <mat-datepicker-toggle
+        matIconSuffix
+        [for]="datepicker"
+      ></mat-datepicker-toggle>
+      <mat-datepicker #datepicker>
+        <mat-datepicker-actions>
+          <button mat-button matDatepickerCancel>Cancel</button>
+          <button mat-raised-button matDatepickerApply>Apply</button>
+        </mat-datepicker-actions>
+      </mat-datepicker>
+    </mat-form-field>
+  </div>
+
+  <div class="email-input">
+    <mat-form-field appearance="outline">
+        <mat-label>E-Mail</mat-label>
+        <input [disabled]="loading" [(ngModel)]="user.email" matInput placeholder="Placeholder" />
+        <!-- <mat-hint>Please enter your Name</mat-hint> -->
+      </mat-form-field>
+  </div>
+
+  
+</mat-dialog-content>
+<mat-dialog-actions>
+  <button [disabled]="loading" mat-button (click)="closeDialog()">Cancel</button>
+  <button [disabled]="loading" mat-button (click)="saveEditedUser()" cdkFocusInitial>Save</button>
+</mat-dialog-actions>
+</div>
+
+

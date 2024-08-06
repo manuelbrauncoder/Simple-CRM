@@ -4,11 +4,7 @@ import { MatButtonModule } from '@angular/material/button';
 import { MatTooltipModule } from '@angular/material/tooltip';
 import { DialogAddUserComponent } from '../dialog-add-user/dialog-add-user.component';
 import {MatCardModule} from '@angular/material/card';
-import {
-  
-  MatDialog,
-  
-} from '@angular/material/dialog';
+import { MatDialog } from '@angular/material/dialog';
 import { User } from '../models/user.class';
 import { FirebaseService } from '../services/firebase.service';
 import { RouterLink } from '@angular/router';

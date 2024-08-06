@@ -1,0 +1,27 @@
+@import '../../styles.scss';
+
+.date-input {
+    mat-form-field {
+      width: 100%;
+    }
+  }
+
+  .dialog-container {
+    padding: 16px;
+    position: relative;
+    mat-progress-bar {
+      position: absolute;
+      top: 0;
+      left: 0;
+    }
+  }
+
+  .name-input {
+    @include dFlex($g: 16px);
+  }
+
+  .email-input{
+    mat-form-field {
+        width: 100%;
+      }
+}

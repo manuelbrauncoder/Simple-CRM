@@ -1,0 +1,51 @@
+@import '../../styles.scss';
+
+.detail-container{
+    @include dFlex($fd: column, $g: 32px, $ai: flex-start);
+}
+
+.user-detail-header{
+    position: relative;
+    background-color: rgb(188, 137, 41);
+    min-height: 250px;
+    @include dFlex($ai: flex-end, $jc: flex-start);
+
+    button{
+        position: absolute;
+        top: 8px;
+        right: 0;
+        background-color: unset;
+        border: unset;
+        cursor: pointer;
+    }
+
+    img{
+        width: 100px;
+        height: 100px;
+        object-fit: cover;
+        border-radius: 100%;
+    }
+
+    .user-details{
+        margin-left: 32px;
+        height: 100px;
+        @include dFlex($fd: column, $ai: flex-start);
+        h2{
+            font-size: 24px;
+            font-weight: 700;
+        }
+    }
+}
+
+.user-address{
+    position: relative;
+    button{
+        position: absolute;
+        top: 8px;
+        right: 0;
+        cursor: pointer;
+        background-color: unset;
+        border: unset;
+        
+    }
+}

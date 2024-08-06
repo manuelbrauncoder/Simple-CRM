@@ -7,6 +7,8 @@ import {
   setDoc,
   onSnapshot,
   addDoc,
+  updateDoc,
+  deleteDoc,
 } from '@angular/fire/firestore';
 import {
   query,
@@ -23,32 +25,37 @@ import { User } from '../models/user.class';
 export class FirebaseService implements OnDestroy {
   firestore: Firestore = inject(Firestore);
   unsubUserList;
+  currentUserId: string = '';
+
+  currentUser: User = {
+    id: '',
+    firstName: '',
+    lastName: '',
+    birthDate: 0,
+    email: '',
+    street: '',
+    zipCode: 0,
+    city: '',
+  };
 
   users: User[] = [];
-
 
   constructor() {
     this.unsubUserList = this.getUserList();
   }
 
-  getUserList(){
+  getUserList() {
     const q = query(this.getUsersCollectionRef(), orderBy('lastName'));
     return onSnapshot(q, (list) => {
       this.users = [];
-      list.forEach(element => {
-        //const user = new User(element.data());
-        //console.log(user);
-        const user = this.setUserObject(element.data(), element.id)
-        console.log(user);
-        
+      list.forEach((element) => {
+        const user = this.setUserObject(element.data(), element.id);
         this.users.push(user);
-        
-                
       });
-      list.docChanges().forEach((change)=>{
-        //this.logChanges(change);
-      })
-    })    
+      list.docChanges().forEach((change) => {
+        this.logChanges(change);
+      });
+    });
   }
 
   setUserObject(obj: any, id: string): User {
@@ -60,10 +67,14 @@ export class FirebaseService implements OnDestroy {
       email: obj.email || '',
       street: obj.street || '',
       zipCode: obj.zipCode || 0,
-      city: obj.city || ''
-    }
+      city: obj.city || '',
+    };
   }
 
+  /**
+   * log changes in firestore
+   * @param change
+   */
   logChanges(change: DocumentChange<DocumentData>) {
     if (change.type === 'added') {
       console.log('New User ', change.doc.data());
@@ -76,19 +87,66 @@ export class FirebaseService implements OnDestroy {
     }
   }
 
+  /**
+   * add new user to firebase
+   * @param user
+   */
   async addUser(user: any) {
-    await addDoc(this.getUsersCollectionRef(), this.getCleanJson(user)).catch((err) => {
-      console.log(err);
+    await addDoc(this.getUsersCollectionRef(), this.getCleanJson(user)).catch(
+      (err) => {
+        console.log(err);
+      }
+    );
+  }
+
+  /**
+   * update the edited User in firebase
+   * @param user
+   */
+  async updateUser(user: User) {
+    if (user) {
+      let docRef = this.getSingleUserDocRef();
+      await updateDoc(docRef, this.getCleanJson(user)).catch((err) => {
+        console.log(err);
+      });
+    }
+  }
+
+  async deleteUser(id: string) {
+    
+      let docRef = doc(this.getUsersCollectionRef(), id);
+      await deleteDoc(docRef).catch((err) => {
+        console.log(err);
+      });
+    
+  }
+
+  getUserDetails() {
+    return onSnapshot(this.getSingleUserDocRef(), (doc) => {
+      // console.log(doc.data());
+      let user = new User(doc.data());
+      this.currentUser = user;
     });
   }
 
-  
-
-  getUsersCollectionRef(){
+  /**
+   *
+   * @returns the firestore collection 'users'
+   * for later: use parameter for collection id
+   */
+  getUsersCollectionRef() {
     return collection(this.firestore, 'users');
   }
 
-  getCleanJson(user: User){
+  /**
+   *
+   * @returns the firestore collection with current User id
+   */
+  getSingleUserDocRef() {
+    return doc(this.getUsersCollectionRef(), this.currentUserId);
+  }
+
+  getCleanJson(user: User) {
     return {
       firstName: user.firstName,
       lastName: user.lastName,
@@ -96,8 +154,8 @@ export class FirebaseService implements OnDestroy {
       email: user.email,
       street: user.street,
       zipCode: user.zipCode,
-      city: user.city
-    }
+      city: user.city,
+    };
   }
 
   ngOnDestroy(): void {
